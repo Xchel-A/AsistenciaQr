@@ -30,19 +30,17 @@ function MainApp() {
   return (
     <NavigationContainer>
       {user ? (
-        <Tab.Navigator>
-          {user.role === 'alumno' ? (
-<>
+        user.role === 'alumno' ? (
+          <Tab.Navigator>
             <Tab.Screen name="Perfil" component={DataUser} />
             <Tab.Screen name="QRCodeGenerator" component={QRCodeGenerator} />
-            </>
-            ) : user.role === 'maestro' ?  (
-              <>
-              <Tab.Screen name="Perfil" component={DataUser} />
-              <Tab.Screen name="EscanearQR" component={QRCodeScanner} />
-            </>
-          ):null}
-        </Tab.Navigator>
+          </Tab.Navigator>
+        ) : user.role === 'maestro' ? (
+          <Tab.Navigator>
+            <Tab.Screen name="Perfil" component={DataUser} />
+            <Tab.Screen name="EscanearQR" component={QRCodeScanner} />
+          </Tab.Navigator>
+        ) : null
       ) : (
         <AuthStack.Navigator>
           <AuthStack.Screen name="SingIn" component={LoginForm} />
@@ -52,3 +50,4 @@ function MainApp() {
     </NavigationContainer>
   );
 }
+
