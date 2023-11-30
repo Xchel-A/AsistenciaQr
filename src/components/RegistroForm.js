@@ -13,16 +13,38 @@ const RegistroForm = () => {
 
   const handleSignUp = async () => {
     // Realizar la validación de los datos antes de llamar a signUp
-    if (!email || !password || !displayName) {
-      // Mostrar toast si los campos no están completos
+  
+    // Validar la longitud del nombre
+    if (displayName.length < 10) {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: 'Todos los campos son obligatorios',
+        text2: 'El nombre debe tener al menos 10 caracteres',
       });
       return;
     }
-
+  
+    // Validar el formato del correo electrónico
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email) || !email.endsWith('@uteq.edu.mx')) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Ingrese un correo electrónico válido de la UTEQ',
+      });
+      return;
+    }
+  
+    // Validar la seguridad de la contraseña (puedes personalizar tus propias reglas aquí)
+    if (password.length < 8) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'La contraseña debe tener al menos 8 caracteres',
+      });
+      return;
+    }
+  
     try {
       await signUp(email, password, displayName);
       // Mostrar toast en caso de éxito
@@ -31,9 +53,13 @@ const RegistroForm = () => {
         text1: 'Registro Exitoso',
         text2: '¡Bienvenido!',
       });
-
-      navigation.replace('SingIn');
-
+  
+      // Limpiar los inputs después del registro exitoso
+      setDisplayName('');
+      setEmail('');
+      setPassword('');
+  
+      //navigation.replace('SingIn');
     } catch (error) {
       // Mostrar toast en caso de error
       Toast.show({
@@ -44,7 +70,7 @@ const RegistroForm = () => {
       console.error('Error en el registro:', error.message);
     }
   };
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Registro</Text>

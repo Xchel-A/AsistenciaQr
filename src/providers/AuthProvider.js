@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../utils/firebaseConfig';
@@ -15,36 +14,9 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
 
-  // Cargar el usuario desde AsyncStorage al iniciar la aplicación
-  useEffect(() => {
-    const loadUserFromStorage = async () => {
-      try {
-        const storedUser = await AsyncStorage.getItem('user');
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
-        }
-      } catch (error) {
-        //console.error('Error al cargar el usuario desde AsyncStorage:', error.message);
-      }
-    };
-
-    loadUserFromStorage();
-  }, []);
-
   // Este efecto se ejecutará cada vez que 'user' cambie
   useEffect(() => {
     console.log('Usuario después de iniciar sesión:', user);
-
-    // Guardar el usuario en AsyncStorage cada vez que cambie
-    const saveUserToStorage = async () => {
-      try {
-        await AsyncStorage.setItem('user', JSON.stringify(user));
-      } catch (error) {
-        console.error('Error al guardar el usuario en AsyncStorage:', error.message);
-      }
-    };
-
-    saveUserToStorage();
   }, [user]);
 
   const signIn = async (email, password) => {
@@ -76,9 +48,6 @@ const AuthProvider = ({ children }) => {
     try {
       await signOut(auth);
       setUser(null);
-
-      // Eliminar el usuario de AsyncStorage al cerrar sesión
-      await AsyncStorage.removeItem('user');
     } catch (error) {
       console.error('Error al cerrar sesión:', error.message);
     }
@@ -98,11 +67,9 @@ const AuthProvider = ({ children }) => {
       });
 
       // Actualizar el estado del usuario
-      setUser(user);
-      
+      //setUser(user);
     } catch (error) {
-      
-      //console.error('Error de registro:', error.message);
+      console.error('Error de registro:', error.message);
     }
   };
 
