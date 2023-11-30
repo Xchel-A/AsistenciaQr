@@ -43,8 +43,8 @@ function MainApp() {
         ) : null
       ) : (
         <AuthStack.Navigator>
-          <AuthStack.Screen name="SingIn" component={LoginForm} />
-          <AuthStack.Screen name="Registro" component={RegistroForm} />
+          <AuthStack.Screen name="SingIn" component={LoginForm} options={{headerShown: false}}/>
+          <AuthStack.Screen name="Registro" component={RegistroForm} options={{headerShown: false}}/>
         </AuthStack.Navigator>
       )}
     </NavigationContainer>
