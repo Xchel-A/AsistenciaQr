@@ -1,6 +1,6 @@
 // LoginForm.js
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, TouchableOpacity , Text, Image } from 'react-native';
+import { View, TextInput, Button, StyleSheet, TouchableOpacity , Text, Image, ScrollView } from 'react-native';
 import { useAuth } from '../providers/AuthProvider';
 import { useNavigation } from '@react-navigation/native';
 import { SvgXml } from "react-native-svg";
@@ -23,55 +23,58 @@ const LoginForm = () => {
   };
 
   return (
-    <KeyboardAwareScrollView 
-      style={styles.mainContainer}
-      resetScrollToCoords={{ x: 0, y: 0 }}
-      scrollEnabled={false}
-    >
-      <View style={styles.containerSvg}>
-        <SvgXml xml={fondoSvg} />
-        <Text style={styles.svgText}>Inicio sesión</Text>
-      </View>
-      <View style={styles.containerForm}>
-        <Image
-          source={require("../assets/profile.png")}
-          style={styles.imagen}
-        />
-        <Text style={styles.titulo}>UniversiQR</Text>
-        <View style={[styles.inputContainer, { marginBottom: 18 }]}>
-            <View style={styles.iconContainer}>
-                <FontAwesome5 icon="envelope" style={styles.icon} />
-            </View>
-            <TextInput
-              placeholder="Correo electrónico"
-              icon="at"
-              onChangeText={(text) => setEmail(text)}
-              value={email}
-              style={styles.inputText}
-              placeholderTextColor="white"
-            />
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <KeyboardAwareScrollView 
+        style={styles.mainContainer}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        scrollEnabled={false}
+      >
+        <View style={styles.containerSvg}>
+          <SvgXml xml={fondoSvg} />
+          <Text style={styles.svgText}>Inicio sesión</Text>
         </View>
-        <View style={styles.inputContainer}>
-            <View style={styles.iconContainer}>
-                <FontAwesome5 icon="eye" size={24} color="#64B5F6" style={styles.icon} />
-            </View>
-            <TextInput
-              placeholder="Contraseña"
-              onChangeText={(text) => setPassword(text)}
-              value={password}
-              secureTextEntry
-              style={styles.inputText}
-              placeholderTextColor="white"
-            />
-      </View>
-      <TouchableOpacity style={styles.button1} onPress={handleLogin}>
-        <Text style={styles.buttonText1}>Iniciar sesión</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button1} onPress={handleRegistro}>
-        <Text style={styles.buttonText1}>Registro</Text>
-      </TouchableOpacity>
-      </View>
-    </KeyboardAwareScrollView>
+        <View style={styles.containerForm}>
+          <Image
+            source={require("../assets/profile.png")}
+            style={styles.imagen}
+          />
+          <Text style={styles.titulo}>UniversiQR</Text>
+          <View style={[styles.inputContainer, { marginBottom: 18 }]}>
+              <View style={styles.iconContainer}>
+                  <FontAwesome5 icon="envelope" style={styles.icon} />
+              </View>
+              <TextInput
+                placeholder="Correo electrónico"
+                icon="at"
+                onChangeText={(text) => setEmail(text)}
+                value={email}
+                style={styles.inputText}
+                placeholderTextColor="white"
+              />
+          </View>
+          <View style={styles.inputContainer}>
+              <View style={styles.iconContainer}>
+                  <FontAwesome5 icon="eye" size={24} color="#64B5F6" style={styles.icon} />
+              </View>
+              <TextInput
+                placeholder="Contraseña"
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                secureTextEntry
+                style={styles.inputText}
+                placeholderTextColor="white"
+              />
+        </View>
+        <TouchableOpacity style={styles.button1} onPress={handleLogin}>
+          <Text style={styles.buttonText1}>Iniciar sesión</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button1} onPress={handleRegistro}>
+          <Text style={styles.buttonText1}>Registro</Text>
+        </TouchableOpacity>
+        </View>
+      </KeyboardAwareScrollView>
+    </ScrollView>
+    
   );
 };
 
@@ -79,6 +82,10 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     height: "100%",
+},
+scrollContainer: {
+  flexGrow: 1,
+  justifyContent: 'space-between',
 },
 containerForm: {
     alignItems: "flex-start",

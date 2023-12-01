@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SvgXml } from "react-native-svg";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { FontAwesome5 } from '@expo/vector-icons';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const RegistroForm = () => {
   const { signUp } = useAuth();
@@ -79,74 +80,77 @@ const RegistroForm = () => {
   };
   
   return (
-    <KeyboardAwareScrollView
-      style={styles.mainContainer}
-      resetScrollToCoords={{ x: 0, y: 0 }}
-      scrollEnabled={false}
-    >
-      <View style={styles.containerSvg}>
-        <SvgXml xml={fondoSvg} />
-        <Text style={styles.svgText}>Registrarse</Text>
-      </View>
-      <View style={styles.containerForm}>
-      <Image
-        source={require("../assets/profile.png")}
-        style={styles.imagen}
-      />
-      <Text style={styles.titulo}>UniversiQR</Text>
-      <View style={[styles.inputContainer, { marginBottom: 18 }]}>
-        <View style={styles.iconContainer}>
-          <FontAwesome5 icon="envelope" style={styles.icon} />
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <KeyboardAwareScrollView
+        style={styles.mainContainer}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        scrollEnabled={false}
+      >
+          <View style={styles.containerSvg}>
+            <SvgXml xml={fondoSvg} />
+            <Text style={styles.svgText}>Registrarse</Text>
+          </View>
+          <View style={styles.containerForm}>
+          <Image
+            source={require("../assets/profile.png")}
+            style={styles.imagen}
+          />
+          <Text style={styles.titulo}>UniversiQR</Text>
+          <View style={[styles.inputContainer, { marginBottom: 18 }]}>
+            <View style={styles.iconContainer}>
+              <FontAwesome5 icon="envelope" style={styles.icon} />
+            </View>
+            <TextInput
+              style={styles.inputText}
+              placeholderTextColor="white"
+              placeholder="Nombre"
+              value={displayName}
+              onChangeText={setDisplayName}
+            />
+          </View>
+          <View style={[styles.inputContainer, { marginBottom: 18 }]}>
+            <View style={styles.iconContainer}>
+              <FontAwesome5 icon="envelope" style={styles.icon} />
+            </View>
+            <TextInput
+              style={styles.inputText}
+              placeholderTextColor="white"
+              placeholder="Correo electrónico"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+            />
+          </View>
+          <View style={[styles.inputContainer, { marginBottom: 18 }]}>
+            <View style={styles.iconContainer}>
+              <FontAwesome5 icon="envelope" style={styles.icon} />
+            </View>
+            <TextInput
+              style={styles.inputText}
+              placeholderTextColor="white"
+              placeholder="Contraseña"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+          </View>
+          <TouchableOpacity style={styles.button1} onPress={handleSignUp}>
+            <Text style={styles.buttonText1}>Registrarme</Text>
+          </TouchableOpacity>
+          <View style={styles.userActions}>
+            <Text style={styles.noAccountText}>Ya tienes una cuenta?</Text>
+            <TouchableOpacity
+              style={styles.createAccountButton}
+              onPress={goInicioPrincipal}
+            >
+              <Text style={styles.createAccountButtonText}>Iniciar sesión</Text>
+            </TouchableOpacity>
+          </View>
+          <Toast ref={(ref) => Toast.setRef(ref)} />
         </View>
-        <TextInput
-          style={styles.inputText}
-          placeholderTextColor="white"
-          placeholder="Nombre"
-          value={displayName}
-          onChangeText={setDisplayName}
-        />
-      </View>
-      <View style={[styles.inputContainer, { marginBottom: 18 }]}>
-        <View style={styles.iconContainer}>
-          <FontAwesome5 icon="envelope" style={styles.icon} />
-        </View>
-        <TextInput
-          style={styles.inputText}
-          placeholderTextColor="white"
-          placeholder="Correo electrónico"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
-      </View>
-      <View style={[styles.inputContainer, { marginBottom: 18 }]}>
-        <View style={styles.iconContainer}>
-          <FontAwesome5 icon="envelope" style={styles.icon} />
-        </View>
-        <TextInput
-          style={styles.inputText}
-          placeholderTextColor="white"
-          placeholder="Contraseña"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-      </View>
-      <TouchableOpacity style={styles.button1} onPress={handleSignUp}>
-        <Text style={styles.buttonText1}>Registrarme</Text>
-      </TouchableOpacity>
-      <View style={styles.userActions}>
-        <Text style={styles.noAccountText}>Ya tienes una cuenta?</Text>
-        <TouchableOpacity
-          style={styles.createAccountButton}
-          onPress={goInicioPrincipal}
-        >
-          <Text style={styles.createAccountButtonText}>Iniciar sesión</Text>
-        </TouchableOpacity>
-      </View>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
-    </View>
-  </KeyboardAwareScrollView>
+      </KeyboardAwareScrollView>
+    </ScrollView>
+    
     
   );
 };
@@ -155,6 +159,10 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     height: "100%",
+},
+scrollContainer: {
+  flexGrow: 1,
+  justifyContent: 'space-between',
 },
 containerForm: {
     alignItems: "flex-start",
