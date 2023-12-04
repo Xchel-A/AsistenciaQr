@@ -16,7 +16,7 @@ const AuthProvider = ({ children }) => {
 
   // Este efecto se ejecutará cada vez que 'user' cambie
   useEffect(() => {
-    console.log('Usuario después de iniciar sesión:', user);
+    //console.log('Usuario después de iniciar sesión:', user);
   }, [user]);
 
   const signIn = async (email, password) => {
@@ -37,9 +37,9 @@ const AuthProvider = ({ children }) => {
       // Actualizar el estado del usuario
       setUser(updatedUser);
     } catch (error) {
-      console.error('Error de inicio de sesión:', error.message);
+      //console.error('Error de inicio de sesión:', error.message);
       if (error.user) {
-        console.error('Error de usuario:', error.user);
+        //console.error('Error de usuario:', error.user);
       }
     }
   };
@@ -49,7 +49,7 @@ const AuthProvider = ({ children }) => {
       await signOut(auth);
       setUser(null);
     } catch (error) {
-      console.error('Error al cerrar sesión:', error.message);
+      //console.error('Error al cerrar sesión:', error.message);
     }
   };
 
@@ -69,7 +69,7 @@ const AuthProvider = ({ children }) => {
       // Actualizar el estado del usuario
       //setUser(user);
     } catch (error) {
-      console.error('Error de registro:', error.message);
+      //console.error('Error de registro:', error.message);
     }
   };
 
