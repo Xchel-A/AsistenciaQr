@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View, TextInput } from "react-native";
-import PanelQRCode from "../components/PanelQRCode";
+import { StyleSheet, View } from "react-native";
 import QRCode from "../components/QRCode";
 import { QRCodeProvider } from "../providers/QRCodeProvider";
 
