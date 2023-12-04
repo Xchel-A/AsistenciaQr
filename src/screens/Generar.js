@@ -8,7 +8,7 @@ export default function Generar() {
     return (
         <View style={styles.container}>        
             <QRCodeProvider>
-                <PanelQRCode />
+                
 
                 <QRCode />
             </QRCodeProvider> 

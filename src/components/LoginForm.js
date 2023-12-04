@@ -1,6 +1,5 @@
-// LoginForm.js
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, TouchableOpacity , Text, Image, ScrollView } from 'react-native';
+import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
 import { useAuth } from '../providers/AuthProvider';
 import { useNavigation } from '@react-navigation/native';
 import { SvgXml } from "react-native-svg";
@@ -9,61 +8,61 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 const LoginForm = () => {
   const navigation = useNavigation();
+  const { signIn } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleRegistro = () => {
     // Navegar a la pantalla de escaneo de QR
     navigation.navigate('Registro');
   };
-  const { signIn } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const handleLogin = () => {
     signIn(email, password);
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <KeyboardAwareScrollView 
-        style={styles.mainContainer}
-        resetScrollToCoords={{ x: 0, y: 0 }}
-        scrollEnabled={false}
-      >
+    <KeyboardAwareScrollView
+    contentContainerStyle={styles.scrollContainer}
+    resetScrollToCoords={{ x: 0, y: 0 }}
+    scrollEnabled={true} // O quítalo para que sea true por defecto
+    style={{ flex: 1, width: '100%' }}
+    >
+      <View style={styles.containerForm}>
         <View style={styles.containerSvg}>
+          {/* Asegúrate de tener la importación correcta de fondoSvg */}
           <SvgXml xml={fondoSvg} />
           <Text style={styles.svgText}>Inicio sesión</Text>
         </View>
-        <View style={styles.containerForm}>
-          <Image
-            source={require("../assets/profile.png")}
-            style={styles.imagen}
-          />
-          <Text style={styles.titulo}>UniversiQR</Text>
-          <View style={[styles.inputContainer, { marginBottom: 18 }]}>
-              <View style={styles.iconContainer}>
-                  <FontAwesome5 icon="envelope" style={styles.icon} />
-              </View>
-              <TextInput
-                placeholder="Correo electrónico"
-                icon="at"
-                onChangeText={(text) => setEmail(text)}
-                value={email}
-                style={styles.inputText}
-                placeholderTextColor="white"
-              />
+        <Image
+          source={require("../assets/profile.png")}
+          style={styles.imagen}
+        />
+        <Text style={styles.titulo}>UniversiQR</Text>
+        <View style={[styles.inputContainer, { marginBottom: 18 }]}>
+          <View style={styles.iconContainer}>
+            <FontAwesome5 icon="envelope" style={styles.icon} />
           </View>
-          <View style={styles.inputContainer}>
-              <View style={styles.iconContainer}>
-                  <FontAwesome5 icon="eye" size={24} color="#64B5F6" style={styles.icon} />
-              </View>
-              <TextInput
-                placeholder="Contraseña"
-                onChangeText={(text) => setPassword(text)}
-                value={password}
-                secureTextEntry
-                style={styles.inputText}
-                placeholderTextColor="white"
-              />
+          <TextInput
+            placeholder="Correo electrónico"
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            style={styles.inputText}
+            placeholderTextColor="white"
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <View style={styles.iconContainer}>
+            <FontAwesome5 icon="eye" size={24} color="#64B5F6" style={styles.icon} />
+          </View>
+          <TextInput
+            placeholder="Contraseña"
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            secureTextEntry
+            style={styles.inputText}
+            placeholderTextColor="white"
+          />
         </View>
         <TouchableOpacity style={styles.button1} onPress={handleLogin}>
           <Text style={styles.buttonText1}>Iniciar sesión</Text>
@@ -71,58 +70,46 @@ const LoginForm = () => {
         <TouchableOpacity style={styles.button1} onPress={handleRegistro}>
           <Text style={styles.buttonText1}>Registro</Text>
         </TouchableOpacity>
-        </View>
-      </KeyboardAwareScrollView>
-    </ScrollView>
-    
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    height: "100%",
-},
-scrollContainer: {
-  flexGrow: 1,
-  justifyContent: 'space-between',
-},
-containerForm: {
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+  },
+  containerForm: {
     alignItems: "flex-start",
     paddingHorizontal: 20,
     justifyContent: "center",
     alignItems: "center",
-},
-containerSvg: {
+    top: 0,
+  },
+  containerSvg: {
     alignItems: "center",
     justifyContent: "flex-start",
-},
-svgText: {
+  },
+  svgText: {
     position: "absolute",
     top: 90,
     fontSize: 40,
     color: "white",
     fontWeight: "bold",
     textShadowRadius: 3,
-},
-containerForm: {
-    alignItems: "flex-start",
-    paddingHorizontal: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    top: 40,
-},
-imagen: {
+  },
+  imagen: {
     width: 200,
     height: 200,
     marginBottom: 15,
-},
-inputContainer: {
+  },
+  inputContainer: {
     position: "relative",
     marginBottom: 32,
     width: "90%",
-},
-inputText: {
+  },
+  inputText: {
     height: 50,
     backgroundColor: "#9EAEC9",
     borderRadius: 20,
@@ -130,18 +117,18 @@ inputText: {
     fontSize: 15,
     fontWeight: "bold",
     color: "white",
-},
-iconContainer: {
-  marginHorizontal: 5
-},
-icon: {
+  },
+  iconContainer: {
+    marginHorizontal: 5
+  },
+  icon: {
     position: "absolute",
     top: 13,
     left: 15,
     zIndex: 1,
     color: "black",
-},
-titulo: {
+  },
+  titulo: {
     fontSize: 40,
     fontWeight: "bold",
     color: "#088BED",
@@ -150,8 +137,8 @@ titulo: {
     textShadowRadius: 3,
     marginBottom: 30,
     marginTop: 5,
-},
-button1: {
+  },
+  button1: {
     width: 160,
     height: 45,
     borderRadius: 20,
@@ -161,12 +148,12 @@ button1: {
     borderWidth: 2,
     borderColor: "#088BED",
     marginTop: 20,
-},
-buttonText1: {
+  },
+  buttonText1: {
     color: "#FFF",
     fontSize: 20,
     fontWeight: "bold",
-},
+  },
 });
 
 const fondoSvg = `<svg width="440" height="202" viewBox="0 0 440 202" fill="none" xmlns="http://www.w3.org/2000/svg">
