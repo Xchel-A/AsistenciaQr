@@ -4,7 +4,7 @@
     "slug": "QrAsistencia",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/profile.png",
+    "icon": "./src/assets/profile.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./src/assets/profile.png",
